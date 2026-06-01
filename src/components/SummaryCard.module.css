@@ -1,0 +1,29 @@
+.cardsContainer {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.card {
+    flex: 1;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.cardTitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 8px;
+    white-space: nowrap;
+}
+
+.cardValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    white-space: nowrap;
+}

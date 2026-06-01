@@ -1,9 +1,8 @@
-import { StreamChart } from "./components/StreamChart"
-
+import { DashboardLayout } from "./components/DashboardLayout";
 
 function App() {
   return (
-    <StreamChart />
+    <DashboardLayout />
   );
 };
 

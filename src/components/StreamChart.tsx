@@ -1,7 +1,34 @@
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { mockStreamData } from "../data/mockStreamData";
 import styles from "./StreamChart.module.css";
 import { useState } from "react";
+import type { StreamDataPoint } from "../data/mockStreamData";
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (!active || !payload || !payload.length) {
+        return null;
+    }
+    const data = payload[0].payload as StreamDataPoint;
+
+    return (
+        <div className={styles.CustomTooltip}>
+            <div className={styles.tooltipLabel}>{label}</div>
+
+            {payload.map((item: any) => {
+                const isViewers = item.dataKey === "viewers";
+                return (
+                    <div key={item.dataKey} className={styles.tooltipItem} style={{ color: item.stroke }}>
+                        {isViewers ? "同時接続数" : "スパチャ額"}: {item.value?.toLocaleString()} {isViewers ? "人" : "円"}
+                    </div>
+                );
+            })}
+
+            {data.event && (
+                <div className={styles.tooltipEvent}>{data.event}</div>
+            )}
+        </div >
+    );
+};
 
 export const StreamChart = () => {
 
@@ -22,6 +49,7 @@ export const StreamChart = () => {
                     <XAxis dataKey="time" />
                     <YAxis yAxisId="left" tickFormatter={(value) => `${value.toLocaleString()}`} />
                     <YAxis yAxisId="right" orientation="right" tickFormatter={(value) => `¥${value.toLocaleString()}`} />
+                    <Tooltip content={<CustomTooltip />} />
                     <Line yAxisId="left" type="monotone" dataKey="viewers" stroke="#3b82f6" strokeWidth={2} />
                     <Line yAxisId="right" type="monotone" dataKey={scMode === "cumulative" ? "cumulativeSuperChat" : "instantSuperChat"} stroke="#eab308" strokeWidth={2} />
                 </LineChart>
