@@ -7,15 +7,24 @@ export interface StreamDataPoint {
     event: string;                // 配信内のトピック
 }
 
+export interface StreamMetadata {
+    id: string;
+    title: string;
+    creator: string;
+    startTime: string;
+    status: "live" | "archive";
+    tags: string[];
+}
+
 // 5分刻みのデータを「チェックポイント」として定義
-const checkpoints = [
+const clothingEventCheckpoints = [
     { min: 0, time: "21:00", viewers: 8500, chatRate: 45, instant: 0, event: "配信開始" },
     { min: 5, time: "21:05", viewers: 10200, chatRate: 60, instant: 3000, event: "" },
     { min: 10, time: "21:10", viewers: 11500, chatRate: 55, instant: 2600, event: "" },
     { min: 15, time: "21:15", viewers: 12000, chatRate: 70, instant: 2800, event: "雑談・企画告知" },
     { min: 20, time: "21:20", viewers: 13500, chatRate: 95, instant: 4600, event: "" },
     { min: 25, time: "21:25", viewers: 14000, chatRate: 110, instant: 5000, event: "カウントダウン開始" },
-    { min: 30, time: "21:30", viewers: 24500, chatRate: 480, instant: 260000, event: "★新衣装お披露目！" }, // 瞬間最高
+    { min: 30, time: "21:30", viewers: 24500, chatRate: 480, instant: 260000, event: "★新衣装お披露目！" },
     { min: 35, time: "21:35", viewers: 26000, chatRate: 320, instant: 170000, event: "スクショタイム" },
     { min: 40, time: "21:40", viewers: 23000, chatRate: 180, instant: 12000, event: "" },
     { min: 45, time: "21:45", viewers: 21500, chatRate: 140, instant: 10000, event: "新グッズ告知" },
@@ -24,7 +33,35 @@ const checkpoints = [
     { min: 60, time: "22:00", viewers: 15000, chatRate: 80, instant: 8000, event: "配信終了" }
 ];
 
-const generateOneMinuteData = (): StreamDataPoint[] => {
+const singingDurabilityCheckpoints = [
+    { min: 0, time: "19:00", viewers: 3000, chatRate: 30, instant: 0, event: "歌枠耐久スタート！" },
+    { min: 15, time: "19:15", viewers: 3500, chatRate: 35, instant: 5000, event: "10曲目：ファンリクエスト" },
+    { min: 30, time: "19:30", viewers: 4200, chatRate: 50, instant: 8000, event: "Twitterトレンド入り" },
+    { min: 45, time: "19:45", viewers: 5800, chatRate: 90, instant: 15000, event: "目標まであと100人" },
+    { min: 55, time: "19:55", viewers: 8500, chatRate: 350, instant: 180000, event: "🎉チャンネル登録10万人達成！" },
+    { min: 60, time: "20:00", viewers: 7000, chatRate: 120, instant: 35000, event: "ラストソング・配信終了" }
+];
+
+export const mockStreamList: StreamMetadata[] = [
+    {
+        id: "stream-new-outfit",
+        title: "【3D新衣装お披露目】サンプル",
+        creator: "Streamer Name",
+        startTime: "2026-06-11T21:00:00Z",
+        status: "live",
+        tags: ["3Dライブ", "新衣装", "重大発表"]
+    },
+    {
+        id: "stream-singing-endurance",
+        title: "【歌枠】サンプル",
+        creator: "Streamer Name",
+        startTime: "2026-06-07T19:00:00Z",
+        status: "archive",
+        tags: ["歌枠", "耐久", "アニソン"]
+    }
+];
+
+const generateStreamTimeSeries = (checkpoints: any[], startHour: number): StreamDataPoint[] => {
     const data: StreamDataPoint[] = [];
     let currentCumulative = 0;
 
@@ -39,7 +76,7 @@ const generateOneMinuteData = (): StreamDataPoint[] => {
         const ratio = startCp.min === endCp.min ? 1 : (i - startCp.min) / (endCp.min - startCp.min);
 
         // 1分ごとの時間を文字列化
-        const hour = 21 + Math.floor(i / 60);
+        const hour = startHour + Math.floor(i / 60);
         const minStr = String(i % 60).padStart(2, "0");
         const timeStr = `${hour}:${minStr}`;
 
@@ -76,4 +113,7 @@ const generateOneMinuteData = (): StreamDataPoint[] => {
     return data;
 };
 
-export const mockStreamData = generateOneMinuteData();
+export const mockStreamData: Record<string, StreamDataPoint[]> = {
+    "stream-new-outfit": generateStreamTimeSeries(clothingEventCheckpoints, 21),
+    "stream-singing-endurance": generateStreamTimeSeries(singingDurabilityCheckpoints, 19)
+};

@@ -1,5 +1,5 @@
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { mockStreamData } from "../data/mockStreamData";
+import { mockStreamData, mockStreamList } from "../data/mockStreamData";
 import styles from "./StreamChart.module.css";
 import { useState } from "react";
 import type { StreamDataPoint } from "../data/mockStreamData";
@@ -50,17 +50,24 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     );
 };
 
-export const StreamChart = () => {
+interface StreamChartProps {
+    streamId?: string;
+};
+
+export const StreamChart = ({ streamId }: StreamChartProps) => {
 
     const [leftMetric, setLeftMetric] = useState<string>("viewers");
     const [rightMetric, setRightMetric] = useState<string>("cumulativeSuperChat");
     const [displayMode, setDisplayMode] = useState<"all" | "recent">("all");
 
+    const activeStreamId = streamId || mockStreamList[0]?.id;
+    const currentStreamData = mockStreamData[activeStreamId] || [];
+
     const leftConfig = METRIC_CONFIG[leftMetric];
     const rightConfig = METRIC_CONFIG[rightMetric];
     const chartData = displayMode === "all"
-        ? aggregateStreamData(mockStreamData, 5)
-        : mockStreamData.slice(-15);
+        ? aggregateStreamData(currentStreamData, 5)
+        : currentStreamData.slice(-15);
 
     return (
         <div className={styles.chartContainer}>

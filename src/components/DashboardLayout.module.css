@@ -1,7 +1,7 @@
 .container {
     display: grid;
-    grid-template-columns: 180px 1fr;
-    grid-template-rows: 64px 1fr;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 80px 1fr;
     grid-template-areas:
         "sidebar header"
         "sidebar main";
@@ -10,13 +10,6 @@
     overflow: hidden;
     font-family: sans-serif;
     background-color: #f1f5f9;
-}
-
-.sidebar {
-    grid-area: sidebar;
-    background-color: #1e293b;
-    color: #ffffff;
-    padding: 16px;
 }
 
 .header {
@@ -34,28 +27,45 @@
     overflow-y: auto;
 }
 
-.logo {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 32px;
-}
-
-.menuItem {
-    padding: 10px 12px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    color: #94a3b8;
-    cursor: pointer;
-}
-
-.menuItemActive {
-    background-color: #334155;
-    color: #ffffff;
-    font-weight: 500;
-}
-
 .pageTitle {
     font-size: 1.25rem;
     font-weight: 600;
     color: #0f172a;
+    margin: 0;
+}
+
+.headerContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.headerMeta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.streamCreator {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+.statusBadge {
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.live {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.archive {
+    background-color: #f1f5f9;
+    color: #64748b;
 }
