@@ -4,11 +4,14 @@ import { SummaryCard } from "./SummaryCard";
 import { useState } from "react";
 import { mockStreamList } from "../data/mockStreamData";
 import { Sidebar } from "./Sidebar";
+import { useLiveStreamTicker } from "../hooks/useLiveStreamTicker";
 
 
 export const DashboardLayout = () => {
     const [selectedStreamId, setSelectedStreamId] = useState<string>(mockStreamList[0]?.id);
     const currentStreamMeta = mockStreamList.find(s => s.id === selectedStreamId);
+
+    useLiveStreamTicker(selectedStreamId);
 
     return (
         <div className={styles.container}>
