@@ -25,6 +25,9 @@
     grid-area: main;
     padding: 24px;
     overflow-y: auto;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .pageTitle {
