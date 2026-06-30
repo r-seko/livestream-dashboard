@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# Live Stream Analytics Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A real-time analytics dashboard for live streams, built with Next.js and TypeScript. Features background data simulation for live broadcasts, dual-axis interactive charts (Recharts) for monitoring viewer metrics, and automated revenue calculation.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+* **Real-Time Live Simulation**: Features a custom background ticker (`useLiveStreamTicker`) that updates live broadcast metrics (CCV, Chat Rate, and Super Chat) every 5 seconds.
+* **Dual-Axis Interactive Charts**: Visualizes complex data streams using Recharts, allowing simultaneous tracking of viewer counts and financial metrics across distinct time scales (15-minute windows vs. full duration).
+* **Automated Revenue Calculation**: Tracks and breaks down instant and cumulative Super Chat earnings dynamically.
+* **Stream Switching**: Integrated sidebar UI to instantly switch active dashboard views between live broadcasts and static past archives.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+* **Framework**: Next.js
+* **Language**: TypeScript
+* **Charting Library**: Recharts
+* **Styling**: CSS Modules
+* **State/Logic**: Custom React Hooks
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📦 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Clone the repository
+```bash
+git clone <your-repository-url>
+cd <project-directory>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3. Run the development server
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 📂 Project Structure (Core Parts)
+```text
+src/
+├── components/
+│   ├── DashboardLayout.tsx  # Main dashboard container & layout
+│   ├── Sidebar.tsx          # Stream selection menu
+│   ├── StreamChart.tsx      # Dual-axis Recharts implementation
+│   └── SummaryCard.tsx      # Real-time KPI summary display
+├── hooks/
+│   └── useLiveStreamTicker.ts # Real-time metric simulation engine
+└── data/
+    └── mockStreamData.ts    # Seed data for live and archived streams
 ```
